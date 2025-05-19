@@ -40,6 +40,7 @@ withdrawals_withdrawal (not used in final queries)
 - Estimated CLV using the provided formula.
 
 # Challenges
-- Normalizing amount fields (stored in kobo) required consistent conversion.
-- Mixed plan types had overlapping identifiers requiring type-specific filtering.
-- Null-safe calculations (e.g., avoiding division by zero on tenure).
+- Inconsistent Transaction Status: The transaction_status field contained unstructured text and irrelevant values (e.g., future timestamps, error messages). Manual filtering was done to isolate valid statuses such as: success, successful, monnify_success, support credit, supportcredit, earnings.
+- Currency Format: Deposits were stored in kobo, requiring conversion to naira for meaningful financial summaries.
+- Missing/Null Dates: Some plans had null transaction dates. These were excluded where necessary to avoid misinterpretation in calculations.
+- Avoiding Division by Zero: In CLV calculation, COALESCE and NULLIF were used to ensure no divide-by-zero errors.
